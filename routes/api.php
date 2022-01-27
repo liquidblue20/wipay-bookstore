@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\AdminBookController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,9 +14,12 @@ use App\Http\Controllers\admin\AdminBookController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 Route::post('/books',[AdminBookController::class,'store']);
+
+Route::get('/books',[AdminBookController::class,'index']);
+
+Route::get('/books/{book}',[AdminBookController::class,'show']);
+
+Route::patch('/books/{book}',[AdminBookController::class,'update']);
+
+Route::delete('/books/{book}',[AdminBookController::class,'destroy']);
