@@ -14,7 +14,7 @@ class AdminBookController extends Controller
      */
     public function index()
     {
-        //
+        return Book::all();
     }
 
 
@@ -52,7 +52,7 @@ class AdminBookController extends Controller
      */
     public function show(book $book)
     {
-        //
+        return $book;
     }
 
     /**
@@ -75,7 +75,10 @@ class AdminBookController extends Controller
      */
     public function update(Request $request, book $book)
     {
-        //
+        // $book->find($)
+        $book ->update($request->all());
+        $book->save();
+        return redirect('/api/books/'.$book->id);
     }
 
     /**
@@ -86,6 +89,8 @@ class AdminBookController extends Controller
      */
     public function destroy(book $book)
     {
-        //
+        Book::destroy($book->id);
+        return Book::All();
     }
+
 }
