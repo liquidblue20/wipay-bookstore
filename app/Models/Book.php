@@ -12,4 +12,21 @@ class Book extends Model
     protected $fillable =     [
         'title','author','isbn','quantity','price'
     ];
+
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function is_sellable($quantity)
+    {
+        if ($this->quantity < $quantity)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 }
