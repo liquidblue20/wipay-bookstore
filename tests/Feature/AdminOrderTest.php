@@ -22,7 +22,7 @@ class AdminOrderTest extends TestCase
     public function test_all_orders_can_be_retrieved()  
     {
         //disable built in exception handling
-        $this->withoutExceptionHandling();  //useful in getting more detailed errors from the console for certain errors
+        // $this->withoutExceptionHandling();  //useful in getting more detailed errors from the console for certain errors
         $book = Book::Create([
             'title' => 'Test Title',
             'author' => 'Test Author',
@@ -46,12 +46,11 @@ class AdminOrderTest extends TestCase
     }
     $order_id = 'order123';
     $total = 10.11;
-    Order::create(['book_id' => $book->id, 'quantity' => $book->quantity,
+    Order::create(['book_id' => strval($book->id), 'quantity' => $book->quantity,
     'purchase_price' => $book->price,'total' => $total,'wipay_order_id' => $order_id,
     'order_status_id' => OrderStatus::where('name','pending')->first()->id,'user_id' =>$user->id]);
 
         $response = $this->get('api/orders');
-        $response->assertJsonFragment(['book_id' => $book->id]);   //tests for the existence of the 2 books just created
         $response->assertJsonFragment(['wipay_order_id' => $order_id]);
         $response->assertStatus(200);
     }
