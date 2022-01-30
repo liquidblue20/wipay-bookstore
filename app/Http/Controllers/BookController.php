@@ -14,28 +14,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        
+        return Book::all();
     }
 
     /**
@@ -46,40 +25,12 @@ class BookController extends Controller
      */
     public function show(book $book)
     {
-        //
+        return $book;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(book $book)
+    //Searches for the book by title
+    public function search($string)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, book $book)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(book $book)
-    {
-        //
+       return Book::where('title','like','%'.$string.'%')->get();
     }
 }

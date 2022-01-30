@@ -20,6 +20,7 @@ class Book extends Model
 
     public function is_sellable($quantity)
     {
+        logger('Book Quantity ID'.$this->id.': Quant'.$this->quantity);
         if ($this->quantity < $quantity)
         {
             return false;
