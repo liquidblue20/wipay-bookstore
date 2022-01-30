@@ -26,17 +26,17 @@ class BookSeeder extends Seeder
             ['author' => 'auth2',
             'title' => 'title2',
             'isbn' => '234432',
-            'quantity' => rand(),
+            'quantity' => rand($min,$max),
             'price' => mt_rand ($min*10, $max*10) / 10
             ],['author' => 'auth3',
             'title' => 'title3',
             'isbn' => '345543',
-            'quantity' => rand(),
+            'quantity' => rand($min,$max),
             'price' => mt_rand ($min*10, $max*10) / 10
             ],['author' => 'auth4',
             'title' => 'title4',
             'isbn' => '456654',
-            'quantity' => rand(),
+            'quantity' => rand($min,$max),
             'price' => mt_rand ($min*10, $max*10) / 10
             ]
         ];
