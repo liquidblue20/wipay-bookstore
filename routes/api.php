@@ -6,7 +6,6 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PaymentController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +16,7 @@ use App\Http\Controllers\PaymentController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 
 Route::middleware('auth:sanctum')-> group(function() {
     route::post('/logout',[AuthController::class,'logout']);

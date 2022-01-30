@@ -30,4 +30,5 @@ class Book extends Model
             return true;
         }
     }
+
 }
