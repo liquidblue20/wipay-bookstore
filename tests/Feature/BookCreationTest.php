@@ -5,7 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Book;
-
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
 
 class BookCreationTest extends TestCase
 {
@@ -18,8 +19,14 @@ class BookCreationTest extends TestCase
     public function test_a_book_can_be_added()  //php unit was configured for tests to be prefixed with test
     {
         $this->withoutExceptionHandling();
+
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['crud:book']
+        );
+
         $bookcount = Book::All()->count();
-        $response = $this->post('api/books',
+        $response =$this->withHeaders(['Accept'=>'application/json'])->post('api/books',
     [
         'title' => 'Test Title',
         'author' => 'Test Author',
@@ -38,7 +45,11 @@ class BookCreationTest extends TestCase
      **/
     public function test_a_title_is_required()  
     {
-        $response = $this->post('api/books',
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['crud:book']
+        );
+    $response =$this->withHeaders(['Accept'=>'application/json'])->post('api/books',
     [
         'title' => '',
         'author' => 'Test Author',
@@ -47,7 +58,7 @@ class BookCreationTest extends TestCase
         'quantity' => 13
 
     ]);
-    $response->assertSessionHasErrors('title');
+    $response->assertJsonValidationErrors('title');
     }
 
     /**
@@ -55,16 +66,21 @@ class BookCreationTest extends TestCase
      **/
     public function test_an_author_is_required()  //php unit was configured for tests to be prefixed with test
     {
-        $response = $this->post('api/books',
+        // $this->withoutExceptionHandling();
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['crud:book']
+        );
+        $response = $this->withHeaders(['Accept'=>'application/json'])->post('api/books',
     [
         'title' => 'Test Title',
         'author' => '',
-        'isbn' => strval(rand()),
+        'isbn' => 'd13d3d3',
         'price' => 13.13,
         'quantity' => 13
 
     ]);
-    $response->assertSessionHasErrors('author');
+    $response->assertJsonValidationErrors('author');
     }
 
     /**
@@ -72,7 +88,11 @@ class BookCreationTest extends TestCase
      **/
     public function test_an_isbn_is_required()  //php unit was configured for tests to be prefixed with test
     {
-        $response = $this->post('api/books',
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['crud:book']
+        );
+        $response = $this->withHeaders(['Accept'=>'application/json'])->post('api/books',
     [
         'title' => 'Test Title',
         'author' => 'Test Author',
@@ -81,6 +101,6 @@ class BookCreationTest extends TestCase
         'quantity' => 13
 
     ]);
-    $response->assertSessionHasErrors('isbn');
+    $response->assertJsonValidationErrors('isbn');
     }
 }

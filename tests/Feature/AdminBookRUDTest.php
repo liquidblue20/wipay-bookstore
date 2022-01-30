@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Book;
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
 
 use function PHPUnit\Framework\assertEquals;
 
@@ -19,7 +21,7 @@ class AdminBookRUDTest extends TestCase
     public function test_all_books_can_be_retrieved()  
     {
         //disable built in exception handling
-        $this->withoutExceptionHandling();  //useful in getting more detailed errors from the console for certain errors
+        // $this->withoutExceptionHandling();  //useful in getting more detailed errors from the console for certain errors
         $book = Book::Create([
             'title' => 'Test Title',
             'author' => 'Test Author',
@@ -50,7 +52,7 @@ class AdminBookRUDTest extends TestCase
     public function test_a_book_can_be_retrieved()  
     {
         //disable built in exception handling
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $book = Book::Create([
             'title' => 'Test Title get request',
             'author' => 'Test Author',
@@ -83,8 +85,14 @@ class AdminBookRUDTest extends TestCase
             'quantity' => 13
         ]);
 
+        //Create user for request
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['crud:book']
+        );
+
         //attempt to update book just created via api endpoint
-        $response = $this->patch('api/books/'.strval($book->id),
+        $response = $this->withHeaders(['Accept'=>'application/json'])->patch('api/books/'.strval($book->id),
         [
             'title' => 'Test Title after update request',
             'author' => 'Test Author updated',
@@ -111,6 +119,10 @@ class AdminBookRUDTest extends TestCase
     {
         //disable built in exception handling
         $this->withoutExceptionHandling();
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['crud:book']
+        );
         $book = Book::Create([
             'title' => 'Test Title get request to be deleted',
             'author' => 'Test Author',
@@ -119,10 +131,11 @@ class AdminBookRUDTest extends TestCase
             'quantity' => 13
     
         ]);
+        
        
         //Checks if book was created, then deletes and recounts to make sure count is consistent with deletion
         $this->assertCount(1,Book::all());
-        $response = $this->delete('api/books/'.$book->id);
+        $response = $this->withHeaders(['Accept'=>'application/json'])->delete('api/books/'.$book->id);
         $this->assertCount(0,Book::all());
         $response->assertJsonMissing(['title' => 'Test Title get request to be deleted']);
     }
