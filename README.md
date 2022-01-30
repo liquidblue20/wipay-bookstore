@@ -18,3 +18,5 @@ Was created and tested with both sqlite and mysql ,create a database.sqlite file
 php artisan migrate:refresh --seed
 
 Php artisan key:generate
+
+php artisan test : used to validate some basic functionality of the app
