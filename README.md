@@ -20,3 +20,24 @@ php artisan migrate:refresh --seed
 Php artisan key:generate
 
 php artisan test : used to validate some basic functionality of the app
+
+## Requirements
+
+Requirements
+1. Must use PHP and Laravel.
+2. Create a database of books with at least;
+    a. Author Name
+    b. Title
+    c. ISBN
+3. Your store must have price and inventory, so for any given book;
+    a. Set a random price
+    b. Set a random number of books in your inventory
+4. Anyone can search for a book, and see all the information about the book, including
+price and inventory.
+5. Only registered customers can purchase books.
+6. Customers may use WiPay’s Payment API (sandbox credit card) to conduct online
+purchases.
+7. As the owner of the store, you should be able to perform special actions on your store,
+such as;
+    a. View any and/or all sales activity.
+    b. CRUD functionality on any given book.
