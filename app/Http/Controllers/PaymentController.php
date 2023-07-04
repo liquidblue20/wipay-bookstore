@@ -39,7 +39,7 @@ class PaymentController extends Controller
         $environment = 'sandbox';
         $fee_structure = 'customer_pay';
         $method = 'credit_card';
-        $order_id = Str::substr((string) Str::uuid(),0,25);
+        $order_id = (string) Str::uuid();
         $origin= 'WiPay-example_app';
         $response_url= 'http://127.0.0.1:8000/api/payment_result';
         $country_code='TT';
