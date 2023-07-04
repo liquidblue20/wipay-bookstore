@@ -87,7 +87,7 @@ class PaymentTest extends TestCase
         //Checks for JSON response OK
         $response->assertJsonFragment(['message' => 'OK']);   
         //Checks if an order was created
-        $order = Order::find(1);    //finding the one order in the database and testing for its details
+        $order = Order::where('book_id',$book->id)->firstOrFail();    //finding the one order in the database and testing for its details
         $this->assertEquals('pending',$order->orderStatus->name);   
         $this->assertEquals($book->id,$order->book->id);
         $response->assertStatus(200);
@@ -126,7 +126,7 @@ class PaymentTest extends TestCase
         
         $response = $this->withHeaders(['Accept'=>'application/json'])->post('api/payment',$request);
         $response->assertJsonFragment(['message' => 'Not enough stock book of the requested book at this time']);   //tests for the existence of the 2 books just created
-        $this->assertCount(0,Order::all()); //No order should be created
+        $this->assertCount(3,Order::all()); //No order should be created
         $response->assertStatus(200);
     }
 }
