@@ -87,7 +87,7 @@ class PaymentTest extends TestCase
         //Checks for JSON response OK
         $response->assertJsonFragment(['message' => 'OK']);   
         //Checks if an order was created
-        $order = Order::find(1);    //finding the one order in the database and testing for its details
+        $order = Order::where('book_id',$book->id)->firstOrFail();    //finding the one order in the database and testing for its details
         $this->assertEquals('pending',$order->orderStatus->name);   
         $this->assertEquals($book->id,$order->book->id);
         $response->assertStatus(200);
