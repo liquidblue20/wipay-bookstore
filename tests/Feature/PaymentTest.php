@@ -126,7 +126,7 @@ class PaymentTest extends TestCase
         
         $response = $this->withHeaders(['Accept'=>'application/json'])->post('api/payment',$request);
         $response->assertJsonFragment(['message' => 'Not enough stock book of the requested book at this time']);   //tests for the existence of the 2 books just created
-        $this->assertCount(3,Order::all()); //No order should be created
+        $this->assertCount(0,Order::all()); //No order should be created
         $response->assertStatus(200);
     }
 }
