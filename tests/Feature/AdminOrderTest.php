@@ -23,6 +23,7 @@ class AdminOrderTest extends TestCase
     public function test_all_orders_can_be_retrieved()  
     {
         //disable built in exception handling
+        // $this->seed();
         // $this->withoutExceptionHandling();  //useful in getting more detailed errors from the console for certain errors
         //creates book to order
         $book = Book::Create([
